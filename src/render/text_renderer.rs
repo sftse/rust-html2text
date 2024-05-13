@@ -805,9 +805,9 @@ impl<T: Clone> BorderHoriz<T> {
     }
 
     /// Turn into a string with drawing characters
-    pub fn into_string(self) -> String {
+    pub fn to_string(&self) -> String {
         self.segments
-            .into_iter()
+            .iter()
             .map(|seg| match seg {
                 BorderSegHoriz::Straight => '─',
                 BorderSegHoriz::StraightVert => '/',
@@ -816,11 +816,6 @@ impl<T: Clone> BorderHoriz<T> {
                 BorderSegHoriz::JoinCross => '┼',
             })
             .collect::<String>()
-    }
-
-    /// Return a string without destroying self
-    pub fn to_string(&self) -> String {
-        self.clone().into_string()
     }
 }
 
@@ -838,7 +833,7 @@ impl<T: PartialEq + Eq + Clone + Debug + Default> RenderLine<T> {
     pub fn into_string(self) -> String {
         match self {
             RenderLine::Text(tagged) => tagged.into_string(),
-            RenderLine::Line(border) => border.into_string(),
+            RenderLine::Line(border) => border.to_string(),
         }
     }
 
@@ -853,7 +848,7 @@ impl<T: PartialEq + Eq + Clone + Debug + Default> RenderLine<T> {
                 let mut tagged = TaggedLine::new();
                 let tag = border.tag.clone();
                 tagged.push(Str(TaggedString {
-                    s: border.into_string(),
+                    s: border.to_string(),
                     tag,
                 }));
                 tagged
@@ -1294,7 +1289,7 @@ impl<D: TextDecorator> Renderer for SubRenderer<D> {
                             tag: tag.clone(),
                         }));
                         tline.push(Str(TaggedString {
-                            s: l.into_string(),
+                            s: l.to_string(),
                             tag: tag.clone(),
                         }));
                         RenderLine::Text(tline)
