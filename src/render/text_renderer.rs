@@ -149,9 +149,9 @@ impl<T: Debug + Eq + PartialEq + Clone + Default> TaggedLine<T> {
     }
 
     /// Join the line into a String, ignoring the tags and markers.
-    pub fn into_string(self) -> String {
+    pub fn to_string(&self) -> String {
         let mut s = String::new();
-        for tle in self.v {
+        for tle in &self.v {
             if let TaggedLineElement::Str(ts) = tle {
                 s.push_str(&ts.s);
             }
@@ -832,7 +832,7 @@ impl<T: PartialEq + Eq + Clone + Debug + Default> RenderLine<T> {
     /// Turn the rendered line into a String
     pub fn into_string(self) -> String {
         match self {
-            RenderLine::Text(tagged) => tagged.into_string(),
+            RenderLine::Text(tagged) => tagged.to_string(),
             RenderLine::Line(border) => border.to_string(),
         }
     }
