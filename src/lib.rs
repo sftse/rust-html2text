@@ -757,9 +757,9 @@ fn desc_list_children_to_render_nodes<T: Write>(
 }
 
 /// Convert a table into a RenderNode
-fn table_to_render_tree<'a, 'b, T: Write>(
+fn table_to_render_tree<'a, T: Write>(
     handle: Handle,
-    _err_out: &'b mut T,
+    _err_out: &mut T,
 ) -> TreeMapResult<'a, HtmlContext, Handle, RenderNode> {
     pending(handle, |_, rowset| {
         let mut rows = vec![];
@@ -781,9 +781,9 @@ fn table_to_render_tree<'a, 'b, T: Write>(
 }
 
 /// Add rows from a thead or tbody.
-fn tbody_to_render_tree<'a, 'b, T: Write>(
+fn tbody_to_render_tree<'a, T: Write>(
     handle: Handle,
-    _err_out: &'b mut T,
+    _err_out: &mut T,
 ) -> TreeMapResult<'a, HtmlContext, Handle, RenderNode> {
     pending_noempty(handle, |_, rowchildren| {
         let mut rows = rowchildren
@@ -830,9 +830,9 @@ fn tbody_to_render_tree<'a, 'b, T: Write>(
 }
 
 /// Convert a table row to a RenderTableRow
-fn tr_to_render_tree<'a, 'b, T: Write>(
+fn tr_to_render_tree<'a, T: Write>(
     handle: Handle,
-    _err_out: &'b mut T,
+    _err_out: &mut T,
 ) -> TreeMapResult<'a, HtmlContext, Handle, RenderNode> {
     pending(handle, |_, cellnodes| {
         let cells = cellnodes
@@ -857,9 +857,9 @@ fn tr_to_render_tree<'a, 'b, T: Write>(
 }
 
 /// Convert a single table cell to a render node.
-fn td_to_render_tree<'a, 'b, T: Write>(
+fn td_to_render_tree<'a, T: Write>(
     handle: Handle,
-    _err_out: &'b mut T,
+    _err_out: &mut T,
 ) -> TreeMapResult<'a, HtmlContext, Handle, RenderNode> {
     let mut colspan = 1;
     if let Element { ref attrs, .. } = handle.data {

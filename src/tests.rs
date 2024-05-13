@@ -1092,8 +1092,7 @@ Indented again
 #[cfg(not(feature = "html_trace"))]
 #[test]
 fn test_deeply_nested() {
-    use ::std::iter::repeat;
-    let html = repeat("<foo>").take(1000).collect::<Vec<_>>().concat();
+    let html = "<foo>".repeat(1000);
     test_html(html.as_bytes(), "", 10);
 }
 
@@ -1107,10 +1106,7 @@ fn test_deeply_nested_table() {
         .take(rpt)
         .collect::<Vec<_>>()
         .concat()
-        + &repeat("</td></tr></table>")
-            .take(rpt)
-            .collect::<Vec<_>>()
-            .concat();
+        + &"</td></tr></table>".repeat(rpt);
 
     let result = repeat(
         r#"──────────
@@ -1121,14 +1117,14 @@ hi
     .take(rpt - 3)
     .collect::<Vec<_>>()
     .concat()
-        + &r#"──┬────
+        + r#"──┬────
 hi│hi  
   │////
   │──  
   │hi  
   │──  
 ──┴────
-"# + &repeat("──────────\n").take(rpt - 3).collect::<String>();
+"# + &"──────────\n".repeat(rpt - 3);
     test_html(html.as_bytes(), &result, 10);
 }
 
